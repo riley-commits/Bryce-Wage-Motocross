@@ -34,56 +34,56 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* Hero — split layout: brand wordmark on the left, Bryce on the right */}
-      <section className="bg-navy text-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16 lg:py-20 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
-          {/* Text column */}
-          <div>
-            <p className="eyebrow text-red mb-4">Pre-order interest</p>
-            <h1
-              className="font-display font-bold text-white text-5xl sm:text-6xl lg:text-7xl leading-[0.95]"
-              style={{ letterSpacing: "-0.02em" }}
-            >
-              BRYCE WAGE
-              <br />
-              <span className="text-red">MOTOCROSS</span>
-            </h1>
-            <p className="mt-6 max-w-xl text-white/80 text-base sm:text-lg leading-relaxed">
-              Limited drops of motocross-inspired apparel.
-              Tell us what you want, we'll order it, you pay when it arrives.
-            </p>
-            <div className="mt-8">
-              <StatusPill
-                open={settings.ordering_open}
-                label={settings.ordering_window_label}
-              />
-            </div>
-          </div>
+      {/* Hero — full-bleed photo with wordmark + status overlaid on the left.
+          Image is horizontally flipped via CSS (`-scale-x-100`) so the rider
+          sits in the right half of the frame, freeing the left third for the
+          text to read against open sky instead of overlapping the bike. The
+          source file on disk stays un-flipped so the flip is a one-line revert. */}
+      <section className="relative isolate overflow-hidden bg-navy text-white flex min-h-[80vh] sm:min-h-[70vh] lg:min-h-[640px]">
+        <div className="absolute inset-0 -z-10">
+          <Image
+            src="/hero.jpg"
+            alt="Bryce — #86 — Honda CRF, mid-jump"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover -scale-x-100"
+          />
+          {/* Heavier dark wash on the left so the wordmark stays readable
+              against any pixel of sky. Tapers to fully transparent on the
+              right so the rider reads sharp and uncovered. */}
+          <div className="absolute inset-0 bg-gradient-to-r from-navy/95 via-navy/60 to-navy/0" />
+          {/* Subtle bottom-up gradient — adds depth and prevents any harsh
+              navy/photo seam at the bottom of the section. */}
+          <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-navy via-navy/60 to-transparent" />
+        </div>
 
-          {/* Photo column — feathered edges so the photo dissolves into the
-              navy section. No frame, no rounded corners, no shadow. The radial
-              mask keeps the rider sharp in the upper-center and fades the
-              rectangle's perimeter to transparent so the entire hero reads as
-              one continuous element. Works identically when stacked on mobile. */}
-          <div
-            className="relative aspect-[16/10] lg:aspect-[4/3]"
-            style={{
-              WebkitMaskImage:
-                "radial-gradient(ellipse 95% 95% at 50% 42%, black 45%, transparent 100%)",
-              maskImage:
-                "radial-gradient(ellipse 95% 95% at 50% 42%, black 45%, transparent 100%)",
-            }}
+        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-20 sm:py-28 flex flex-col justify-center w-full">
+          <p className="eyebrow text-red mb-4">Pre-order interest</p>
+          <h1
+            className="font-display font-bold text-white text-5xl sm:text-7xl leading-[0.95]"
+            style={{ letterSpacing: "-0.02em", textShadow: "0 2px 24px rgba(11,27,43,0.45)" }}
           >
-            <Image
-              src="/hero.jpg"
-              alt="Bryce — #86 — Honda CRF, mid-jump"
-              fill
-              priority
-              sizes="(min-width: 1024px) 560px, 100vw"
-              className="object-cover"
+            BRYCE WAGE
+            <br />
+            <span className="text-red">MOTOCROSS</span>
+          </h1>
+          <p className="mt-6 max-w-xl text-white/85 text-base sm:text-lg leading-relaxed">
+            Limited drops of motocross-inspired apparel.
+            Tell us what you want, we'll order it, you pay when it arrives.
+          </p>
+          <div className="mt-8">
+            <StatusPill
+              open={settings.ordering_open}
+              label={settings.ordering_window_label}
             />
           </div>
         </div>
+
+        {/* Rider tag — sits in the bottom-right, near (but not on) Bryce */}
+        <span className="absolute bottom-3 right-4 sm:bottom-4 sm:right-6 eyebrow text-[10px] text-white/45 tracking-widest z-10 pointer-events-none">
+          Bryce · #86
+        </span>
       </section>
 
       {/* Product grid */}
