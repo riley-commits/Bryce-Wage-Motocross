@@ -34,52 +34,49 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* Hero — full-bleed photo with brand wordmark + status overlaid */}
-      <section className="relative isolate overflow-hidden bg-navy text-white flex min-h-[80vh] sm:min-h-[70vh] lg:min-h-[640px]">
-        <div className="absolute inset-0 -z-10">
-          <Image
-            src="/hero.jpg"
-            alt="Bryce — #86 — Honda CRF, mid-jump"
-            fill
-            priority
-            sizes="100vw"
-            // object-position keeps the rider's helmet/bike framed in the
-            // upper portion at every breakpoint and crops the Unger Excavating
-            // sponsor banner from the bottom of the source photo.
-            className="object-cover object-[center_top]"
-          />
-          {/* Left-weighted gradient for text legibility on wordmark side */}
-          <div className="absolute inset-0 bg-gradient-to-r from-navy/95 via-navy/65 to-navy/15" />
-          {/* Bottom gradient — ensures any stray banner pixels are masked + adds depth */}
-          <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-navy via-navy/70 to-transparent" />
-        </div>
+      {/* Hero — split layout: brand wordmark on the left, Bryce on the right */}
+      <section className="bg-navy text-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16 lg:py-20 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
+          {/* Text column */}
+          <div>
+            <p className="eyebrow text-red mb-4">Pre-order interest</p>
+            <h1
+              className="font-display font-bold text-white text-5xl sm:text-6xl lg:text-7xl leading-[0.95]"
+              style={{ letterSpacing: "-0.02em" }}
+            >
+              BRYCE WAGE
+              <br />
+              <span className="text-red">MOTOCROSS</span>
+            </h1>
+            <p className="mt-6 max-w-xl text-white/80 text-base sm:text-lg leading-relaxed">
+              Limited drops of motocross-inspired apparel.
+              Tell us what you want, we'll order it, you pay when it arrives.
+            </p>
+            <div className="mt-8">
+              <StatusPill
+                open={settings.ordering_open}
+                label={settings.ordering_window_label}
+              />
+            </div>
+          </div>
 
-        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-20 sm:py-28 flex flex-col justify-center w-full">
-          <p className="eyebrow text-red mb-4">Pre-order interest</p>
-          <h1
-            className="font-display font-bold text-white text-5xl sm:text-7xl leading-[0.95]"
-            style={{ letterSpacing: "-0.02em", textShadow: "0 2px 24px rgba(11,27,43,0.4)" }}
-          >
-            BRYCE WAGE
-            <br />
-            <span className="text-red">MOTOCROSS</span>
-          </h1>
-          <p className="mt-6 max-w-xl text-white/85 text-base sm:text-lg leading-relaxed">
-            Limited drops of motocross-inspired apparel.
-            Tell us what you want, we'll order it, you pay when it arrives.
-          </p>
-          <div className="mt-8">
-            <StatusPill
-              open={settings.ordering_open}
-              label={settings.ordering_window_label}
+          {/* Photo column — contained card, beside the heading on lg+, below on mobile.
+              Source was pre-cropped to remove the Unger banner, so the photo's
+              natural ~16:9 ratio renders with effectively no further cropping. */}
+          <div className="relative aspect-[16/10] lg:aspect-[4/3] rounded-md overflow-hidden ring-1 ring-white/10 shadow-2xl">
+            <Image
+              src="/hero.jpg"
+              alt="Bryce — #86 — Honda CRF, mid-jump"
+              fill
+              priority
+              sizes="(min-width: 1024px) 560px, 100vw"
+              className="object-cover"
             />
+            <span className="absolute bottom-2 right-3 eyebrow text-[10px] text-white/70 tracking-widest pointer-events-none">
+              Bryce · #86
+            </span>
           </div>
         </div>
-
-        {/* Photo credit / rider tag */}
-        <span className="absolute bottom-3 right-4 sm:bottom-4 sm:right-6 eyebrow text-[10px] text-white/45 tracking-widest z-10 pointer-events-none">
-          Bryce · #86
-        </span>
       </section>
 
       {/* Product grid */}
