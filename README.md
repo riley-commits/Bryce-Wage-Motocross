@@ -115,7 +115,7 @@ npx vercel env add KEY_NAME production
 
 ## Deploy workflow
 
-The Vercel project is connected to <https://github.com/riley-commits/Bryce-Wage-Motocross>.
+The Vercel project is connected to <https://github.com/riley-commits/Bryce-Wadge-Motocross>.
 **Every push to `main` auto-deploys to production.**
 
 ```bash
